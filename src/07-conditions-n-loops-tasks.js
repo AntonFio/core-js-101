@@ -179,8 +179,18 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const obj = {};
+  const newStr = str.split('');
+  for (let i = 0; i < newStr.length; i += 1) {
+    const item = newStr[i];
+    obj[item] = obj[item] ? obj[item] + 1 : 1;
+  }
+  const a = Object.entries(obj).filter((item) => item[1] === 1);
+  if (a[0]) {
+    return a[0].join('').slice(0, 1);
+  }
+  return null;
 }
 
 
@@ -283,8 +293,13 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const str = String(num).split('');
+  const arr = str.reduce((acc, item) => acc + (+item), 0);
+  if (arr >= 9) {
+    return String(arr).split('').reduce((acc, item) => acc + (+item), 0);
+  }
+  return arr;
 }
 
 
@@ -309,8 +324,34 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const open = ['(', '{', '[', '<'];
+  const end = {
+    ')': '(',
+    '}': '{',
+    ']': '[',
+    '>': '<',
+  };
+
+  const stack = [];
+
+  for (let i = 0; i < str.length; i += 1) {
+    const strItem = str[i];
+    if (open.includes(strItem)) {
+      stack.push(strItem);
+    } if (stack.length === 0) {
+      return false;
+    }
+    const topElement = stack[stack.length - 1];
+    if (end[strItem] === topElement) {
+      stack.pop();
+    }
+  }
+
+  if (stack.length === 0) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -334,8 +375,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
